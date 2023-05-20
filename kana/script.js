@@ -85,24 +85,43 @@ const answer = document.getElementById("answer");
 const message = document.getElementById("message");
 const form = document.querySelector("form");
 
-gojuuon = kanalist;
+let list = JSON.parse(JSON.stringify(gojuuon));
 // 随机生成平假名
-let index = Math.floor(Math.random() * gojuuon.length);
-kana.textContent = gojuuon[index][0];
+let index = Math.floor(Math.random() * list.length);
+kana.textContent = list[index][0];
 
 // 处理表单提交事件
 form.addEventListener("submit", function (event) {
   event.preventDefault();
   const input = answer.value.trim();
-  const romaji = gojuuon[index][1];
+  const romaji = list[index][1];
   if (input === romaji) {
     message.textContent = "答案正确！";
     answer.value = "";
-    index = Math.floor(Math.random() * gojuuon.length);
-    kana.textContent = gojuuon[index][0];
+    index = Math.floor(Math.random() * list.length);
+    kana.textContent = list[index][0];
   } else {
     message.textContent = `答案错误，正确答案为 ${romaji}。`;
     // 提高频率
-    gojuuon.push(gojuuon[index]);
+    list.push(list[index]);
   }
 });
+
+function setToGojuuon() {
+  list =  JSON.parse(JSON.stringify(gojuuon));
+  answer.value = "";
+  index = Math.floor(Math.random() * list.length);
+  kana.textContent = list[index][0];
+}
+function setToKatakana() {
+  list =  JSON.parse(JSON.stringify(katakana));
+  answer.value = "";
+  index = Math.floor(Math.random() * list.length);
+  kana.textContent = list[index][0];
+}
+function setToAll() {
+  list =  JSON.parse(JSON.stringify(kanalist));
+  answer.value = "";
+  index = Math.floor(Math.random() * list.length);
+  kana.textContent = list[index][0];
+}
